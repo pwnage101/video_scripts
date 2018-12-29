@@ -1,7 +1,38 @@
 #!/bin/bash
 #
-# Example usage:
-# vid_rect_to_cyl.sh 24 input.MOV output.MOV
+# Convert rectilinear video into cylindrical video.
+#
+# Thanks to hugin's primarily script-oriented architecture, we borrow its
+# stitching tool, nona(1), to do the heavy lifting of actually reprojecting the
+# video frames.
+#
+# This script uses 16 bit per channel (i.e. rgb48be) PNG files as intermediate
+# files in order to 1) preserve the full detail level of 10- or 12-bit source
+# footage, and 2) to minimize the affect of rounding errors that may occur
+# during conversions between YUV and RGB color space.
+#
+# INSTALL PREREQUISITES:
+#
+# sudo apt install ffmpeg hugin-tools parallel
+#
+# SYNOPSIS:
+#
+# vid_rect_to_cyl.sh FOCAL_LENGTH INPUT_FILENAME OUTPUT_FILENAME
+#
+# * FOCAL_LENGTH: the focal length in which the *entire* video was recorded.
+# * INPUT_FILENAME: source (rectilinear) video filename.
+# * OUTPUT_FILENAME: destination (cylindrical) video filename.  MUST end with ".mkv".
+#
+# EXAMPLE USAGE:
+#
+# vid_rect_to_cyl.sh 24 input.MOV output.mkv
+#
+# LIMITATIONS:
+#
+# Output encoding and aspect ratio are hard-coded.  There is also a hard-coded
+# minimum focal length (currently 34mm) because anything smaller causes hard
+# vignetting.  The chosen hard-coded values all work well for 16:9 source
+# footage.
 
 FOCAL_LENGTH=$1
 INPUT=$2
