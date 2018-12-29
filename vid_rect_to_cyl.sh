@@ -8,7 +8,7 @@
 #
 # This script uses 16 bit per channel (i.e. rgb48be) PNG files as intermediate
 # files in order to 1) preserve the full detail level of 10- or 12-bit source
-# footage, and 2) to minimize the affect of rounding errors that may occur
+# footage, and 2) to minimize the effect of rounding errors that may occur
 # during conversions between YUV and RGB color space.
 #
 # INSTALL PREREQUISITES:
