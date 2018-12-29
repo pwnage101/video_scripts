@@ -19,13 +19,15 @@
 #
 # vid_rect_to_cyl.sh FOCAL_LENGTH INPUT_FILENAME OUTPUT_FILENAME
 #
-# * FOCAL_LENGTH: the focal length in which the *entire* video was recorded.
-# * INPUT_FILENAME: source (rectilinear) video filename.
-# * OUTPUT_FILENAME: destination (cylindrical) video filename.  MUST end with ".mkv".
+# * FOCAL_LENGTH: The focal length (35mm equivalent) in which the *entire*
+#   video was recorded. 34 is the minimum.
+# * INPUT_FILENAME: Source (rectilinear) video filename.
+# * OUTPUT_FILENAME: Destination (cylindrical) video filename.  MUST end with
+#   ".mkv".
 #
 # EXAMPLE USAGE:
 #
-# vid_rect_to_cyl.sh 24 input.MOV output.mkv
+# vid_rect_to_cyl.sh 34 input.MOV output.mkv
 #
 # LIMITATIONS:
 #
@@ -102,7 +104,7 @@ EOF
 }
 
 export -f img_rect_to_cyl
-parallel_args=$(find ${tmpdir} | grep "${prefix}"'_[0-9]*_input.png')
+parallel_args=$(find ${tmpdir} | grep "${prefix}"'_[0-9]*_input.png' | sort)
 echo "$parallel_args" | parallel -v img_rect_to_cyl "$WIDTH" "$HEIGHT" "$HFOV"
 
 echo "Encoding the output file..."
